@@ -33,16 +33,35 @@ flowchart LR
 ## Project structure
 
 ```
-main.py                     # Entry point stub
-data/
-  pdfs/                      # Source PDF documents
-  text_files/                # Sample plain-text documents
-  vector_store/              # Persisted ChromaDB collection (generated, gitignored)
-notebook/
-  document.ipynb             # Data ingestion basics (text + PDF loaders)
-  pdf_loader.ipynb           # Full pipeline: chunk -> embed -> store -> retrieve -> generate
-src/                         # Reserved for reusable pipeline modules
+RAG-Project/
+├── main.py                          # Entry point stub
+├── pyproject.toml                   # Project metadata & dependencies (uv)
+├── requirements.txt                 # Dependencies (pip)
+├── .env.example                     # Template for required environment variables
+│
+├── data/
+│   ├── pdfs/                        # Source PDF documents
+│   ├── text_files/                  # Sample plain-text documents
+│   └── vector_store/                # Persisted ChromaDB collection (generated, gitignored)
+│
+├── notebook/
+│   ├── document.ipynb                # Data ingestion basics (text + PDF loaders)
+│   └── pdf_loader.ipynb              # Full pipeline: chunk -> embed -> store -> retrieve -> generate
+│
+├── docs/
+│   └── assets/                       # Images used in this README
+│
+└── src/                              # Reserved for reusable pipeline modules
 ```
+
+| Path | Purpose |
+|---|---|
+| `data/pdfs/` | Drop source PDFs here to be ingested |
+| `data/text_files/` | Plain-text sample documents |
+| `data/vector_store/` | ChromaDB persistence directory, rebuilt from `data/` — not committed |
+| `notebook/document.ipynb` | Minimal example of loading text & PDF documents |
+| `notebook/pdf_loader.ipynb` | End-to-end RAG pipeline: chunk → embed → store → retrieve → generate |
+| `src/` | Placeholder for extracting notebook logic into reusable modules |
 
 ## Tech stack
 
@@ -96,6 +115,10 @@ GEMINI_API_KEY="your-gemini-api-key-here"
    - build the vector store from your documents, and
    - ask questions against it, e.g. `rag_simple("What is Common Language Runtime?", rag_retriever, llm)`.
 3. The vector store persists to `data/vector_store/` so it doesn't need to be rebuilt every run (delete that folder to start fresh).
+
+### Example output
+
+![Example RAG query output](docs/assets/example-output.png)
 
 ## Notes
 
